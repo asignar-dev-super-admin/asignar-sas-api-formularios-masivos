@@ -1,0 +1,31 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api-candidatos-masivos
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    env_file:
+      - .env
+    volumes:
+      # Volúmenes para persistencia de datos
+      - uploads-data:/app/uploads
+      - logs-data:/app/logs
+    restart: unless-stopped
+    networks:
+      - app-network
+
+volumes:
+  # Volúmenes nombrados para persistencia
+  uploads-data:
+    driver: local
+  logs-data:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge
