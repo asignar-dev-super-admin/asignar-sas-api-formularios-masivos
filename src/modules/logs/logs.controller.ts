@@ -1,5 +1,10 @@
 import { Controller, Get } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiSecurity } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiSecurity,
+} from '@nestjs/swagger';
 import { LogsService } from './logs.service';
 
 @ApiTags('logs')
@@ -11,7 +16,8 @@ export class LogsController {
   @Get('requests')
   @ApiOperation({
     summary: 'Obtener estadísticas de peticiones',
-    description: 'Retorna el contador total de peticiones y los últimos 100 registros',
+    description:
+      'Retorna el contador total de peticiones y los últimos 100 registros',
   })
   @ApiResponse({
     status: 200,

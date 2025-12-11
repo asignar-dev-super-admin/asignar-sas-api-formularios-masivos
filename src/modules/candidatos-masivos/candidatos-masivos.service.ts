@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { CreateCandidatoMasivoDto } from './dto/createCandidatoMasivo.dto';
 import { HttpRespond } from 'src/types/httpRespond';
 import { TblCandidatosCorto } from 'src/databases/models/devasign_asignarc_bd03/entities/TblCandidatosCorto';
@@ -10,6 +10,7 @@ export class CandidatosMasivosService {
   constructor(
     @InjectRepository(TblCandidatosCorto)
     private readonly candidatosRepository: Repository<TblCandidatosCorto>,
+    @InjectDataSource() private dataSource: DataSource,
   ) {}
 
   async create(
@@ -54,6 +55,41 @@ export class CandidatosMasivosService {
       return {
         result: false,
         data: 'Error al crear el candidato',
+      };
+    }
+  }
+
+  async getCandidates(): Promise<HttpRespond> {
+    try {
+      const candidates = await this.dataSource.query(
+        `SELECT
+                t1.Id,
+                t1.Id_Formulario,
+                t2.Titulo AS 'TituloFormulario',
+                t2.Nombre_ciudad AS 'CiudadFormulario',
+                t1.Nombres,
+                t1.TipoIdent,
+                t1.Ident,
+                t1.Telefono,
+                t1.WhatsApp,
+                t1.Edad,
+                t1.HojaDeVida,
+                t1.CreatedAt AS 'FechaPostulacion'
+            FROM
+                tbl_candidatos_corto t1
+            INNER JOIN tblformularios t2 ON
+                t1.Id_Formulario = t2.Id;`,
+      );
+
+      return {
+        result: true,
+        data: candidates,
+      };
+    } catch (error) {
+      console.error('Error al obtener los candidatos:', error);
+      return {
+        result: false,
+        data: 'Error al obtener los candidatos',
       };
     }
   }

@@ -128,4 +128,17 @@ export class CandidatosMasivosController {
 
     return res.sendFile(filePath);
   }
+
+  @Get('get-candidates')
+  @ApiOperation({
+    summary: 'Obtener todos los candidatos',
+    description: 'Retorna una lista de todos los candidatos registrados',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Candidatos obtenidos exitosamente',
+  })
+  async getCandidates() {
+    return await this.candidatosMasivosService.getCandidates();
+  }
 }

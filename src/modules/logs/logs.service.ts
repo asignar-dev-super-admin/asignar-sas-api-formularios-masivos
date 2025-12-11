@@ -4,7 +4,11 @@ import { join } from 'path';
 
 @Injectable()
 export class LogsService {
-  private readonly logFilePath = join(process.cwd(), 'logs', 'request-count.log');
+  private readonly logFilePath = join(
+    process.cwd(),
+    'logs',
+    'request-count.log',
+  );
 
   async getRequestStats(): Promise<any> {
     try {

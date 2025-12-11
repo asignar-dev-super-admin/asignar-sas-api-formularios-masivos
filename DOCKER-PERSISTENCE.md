@@ -3,6 +3,7 @@
 ## 📦 Volúmenes Configurados
 
 Este proyecto tiene configurada la persistencia de datos para:
+
 - **`/app/uploads`** - Archivos de hojas de vida
 - **`/app/logs`** - Logs de peticiones
 
@@ -11,26 +12,31 @@ Este proyecto tiene configurada la persistencia de datos para:
 ### Con Docker Compose (Recomendado)
 
 **Construir y ejecutar:**
+
 ```bash
 docker-compose up -d --build
 ```
 
 **Detener:**
+
 ```bash
 docker-compose down
 ```
 
 **Detener Y ELIMINAR volúmenes (¡Cuidado! Borra los datos):**
+
 ```bash
 docker-compose down -v
 ```
 
 **Ver logs:**
+
 ```bash
 docker-compose logs -f api
 ```
 
 **Reiniciar:**
+
 ```bash
 docker-compose restart
 ```
@@ -38,11 +44,13 @@ docker-compose restart
 ### Con Docker directamente
 
 **Construir imagen:**
+
 ```bash
 docker build -t api-candidatos-masivos .
 ```
 
 **Ejecutar con volúmenes:**
+
 ```bash
 docker run -d \
   --name api-candidatos-masivos \
@@ -54,6 +62,7 @@ docker run -d \
 ```
 
 **Detener:**
+
 ```bash
 docker stop api-candidatos-masivos
 docker rm api-candidatos-masivos
@@ -62,17 +71,20 @@ docker rm api-candidatos-masivos
 ## 💾 Gestión de Volúmenes
 
 **Listar volúmenes:**
+
 ```bash
 docker volume ls
 ```
 
 **Inspeccionar volumen:**
+
 ```bash
 docker volume inspect uploads-data
 docker volume inspect logs-data
 ```
 
 **Backup de volumen:**
+
 ```bash
 # Backup de uploads
 docker run --rm -v uploads-data:/data -v $(pwd):/backup alpine tar czf /backup/uploads-backup.tar.gz -C /data .
@@ -82,6 +94,7 @@ docker run --rm -v logs-data:/data -v $(pwd):/backup alpine tar czf /backup/logs
 ```
 
 **Restaurar desde backup:**
+
 ```bash
 # Restaurar uploads
 docker run --rm -v uploads-data:/data -v $(pwd):/backup alpine tar xzf /backup/uploads-backup.tar.gz -C /data
