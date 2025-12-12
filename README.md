@@ -234,6 +234,34 @@ docker run -d \
   api-candidatos-masivos
 ```
 
+## 📦 Persistencia de Archivos y Logs en Producción (Dockploy)
+
+> **IMPORTANTE:** Para evitar la pérdida de archivos subidos (PDFs, hojas de vida) y logs en cada despliegue, debes configurar volúmenes persistentes en Dockploy.
+
+### Cómo configurarlo en Dockploy
+
+1. Ve a la sección **Volumes / Mounts** de tu servicio en Dockploy.
+2. Selecciona **Volume Mount** como tipo de volumen.
+3. Agrega los siguientes volúmenes:
+
+   - **Para archivos subidos:**
+     - Mount Type: `VOLUME`
+     - Volume Name: `uploads`
+     - Mount Path: `/app/uploads`
+
+   - **Para logs:**
+     - Mount Type: `VOLUME`
+     - Volume Name: `logs`
+     - Mount Path: `/app/logs`
+
+4. Guarda la configuración y reinicia la aplicación.
+
+Con esto, los archivos y logs serán persistentes y no se perderán al hacer push, redeploy o reiniciar el contenedor.
+
+> Si no configuras estos volúmenes, **todos los archivos subidos y logs se perderán** en cada despliegue, ya que Dockploy reemplaza el workspace del código en cada push.
+
+---
+
 ### Persistencia de Datos
 
 Los volúmenes Docker están configurados para persistir:
