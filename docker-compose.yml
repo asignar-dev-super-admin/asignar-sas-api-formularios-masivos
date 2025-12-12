@@ -12,19 +12,14 @@ services:
     env_file:
       - .env
     volumes:
-      # Volúmenes para persistencia de datos
-      - uploads-data:/app/uploads
-      - logs-data:/app/logs
+      # Volúmenes para persistencia de datos (mapeo a carpetas locales para evitar pérdida de datos)
+      - ./uploads:/app/uploads
+      - ./logs:/app/logs
     restart: unless-stopped
     networks:
       - app-network
 
-volumes:
-  # Volúmenes nombrados para persistencia
-  uploads-data:
-    driver: local
-  logs-data:
-    driver: local
+
 
 networks:
   app-network:
