@@ -18,11 +18,17 @@ config();
       entities: [
         __dirname + '/../models/devasign_asignarc_bd03/entities/*.{ts,js}',
       ],
-      synchronize: true,
+      synchronize: false,
       charset: 'utf8mb4',
+      retryAttempts: 5,
+      retryDelay: 3000,
       extra: {
         charset: 'utf8mb4',
         collation: 'utf8mb4_unicode_ci',
+        connectionLimit: 15,
+        connectTimeout: 10000,
+        enableKeepAlive: true,
+        keepAliveInitialDelay: 0,
       },
     }),
   ],
